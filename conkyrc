@@ -1,0 +1,27 @@
+background        no
+out_to_console 	  yes
+out_to_x	        no
+update_interval	  5
+total_run_times	  0
+short_units	  yes
+pad_percents	  3
+
+override_utf8_locale yes
+TEXT
+,[
+             {"full_text": "  [${exec whoami}] ", "color":"\#ffffff"},
+             {"full_text": "  [${exec hostname}] ", "color":"\#6F3BFF"},
+             {"full_text": "  [${upspeed eth0}] ", "color":"\#ff0000"},
+             {"full_text": "  [${downspeed eth0}] ", "color":"\#00fff2"},
+              {"full_text": "  [${exec amixer -D pulse get Master | perl -n -e '/Left.*\[(.*)%\]/ && print int($1)'
+}] ", "color":"\#00A9B5"},
+
+  {"full_text": " || [$membar] ", "color":"\#B58900"},
+
+ 
+  {"full_text": " ~ [$entropy_bar] ", "color":"\#AFB500"},
+
+  {"full_text": "[${battery_bar BAT1}] ","color": "\#dc322f"},
+
+  {"full_text": " [${time %a %d %b} ${time %H:%M:%S}] ","color": "\#2fdc57"}
+]
