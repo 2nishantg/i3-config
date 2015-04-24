@@ -22,6 +22,7 @@ set $mod Mod4
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
+font pango:Terminus, Icons 9
 #Modified by me for borders
 hide_edge_borders vertical
 new_window pixel 1
@@ -30,7 +31,7 @@ new_window pixel 1
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec urxvt
 
 # emacs
 bindsym $mod+Shift+Return exec emacs
@@ -46,9 +47,9 @@ bindsym $mod+shift+d exec ~/.i3/dmenu-dark
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+i focus up
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
@@ -58,9 +59,9 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+i move up
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
@@ -70,7 +71,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+g split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -105,8 +106,11 @@ set $tag6 "6:music"
 
 # switch to workspace
 bindsym $mod+1 workspace $tag1
+bindsym $mod+u workspace $tag1
 bindsym $mod+2 workspace $tag2
+bindsym $mod+i workspace $tag2
 bindsym $mod+3 workspace $tag3
+bindsym $mod+o workspace $tag3
 bindsym $mod+4 workspace $tag4
 bindsym $mod+5 workspace $tag5
 bindsym $mod+6 workspace $tag6
@@ -127,7 +131,8 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-
+#Return to previous workspace.
+workspace_auto_back_and_forth yes
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -160,26 +165,27 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-
-
-
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+minus scratchpad show
-
-
-
-
 client.focused  #E0E0E0 #E0E0E0 #101010 #859000
-client.focused_inactive #073642 #073642 #eee8d5 #6c71c4
+client.focused_inactive #07a642 #07a642 #eee8d5 #000000
 client.unfocused #212121 #212121 #93a1a1 #586e75
 client.urgent #d33682 #d33682 #fdf6e3 #dc322f
+bar {
+        status_command $HOME/.i3/conky-i3bar.py
+       # status_command $HOME/.i3/conky
+        position bottom
+        font pango:Terminus, Icons 9
 
-exec --no-startup-id xset r rate 200 40
-exec --no-startup-id nm-applet
-exec --no-startup-id urxvtd -q -f
-exec --no-startup-id rofi
-exec --no-startup-id feh --bg-scale /home/nis/.i3/320574.jpg 
-bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
+
+colors {
+     separator #dc322f
+     background #212121
+     statusline #268bd2
+     focused_workspace #0a9dff #0a9dff #212121
+     active_workspace #fdf6e3 #6c71c4 #fdf6e3
+     inactive_workspace #d9cec3 #d9cec3 #000000
+     urgent_workspace #d33682 #03A9F4 #fdf6e3
+   }
+}
 
 # bar {
 #     font Source Code Pro for Powerline-9
@@ -195,18 +201,47 @@ bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/scre
 #     status_command ~/.i3/conky
 # }
 ##
-bar {
-        status_command $HOME/.i3/conky-i3bar.py
-        position bottom
-        font pango:Terminus, Icons 9
-colors {
-     separator #dc322f
-     background #212121
-     statusline #268bd2
-     focused_workspace #00E676 #00E676 #212121
-     active_workspace #fdf6e3 #6c71c4 #fdf6e3
-     inactive_workspace #93a1a1 #93a1a1 #002b36
-     urgent_workspace #d33682 #03A9F4 #fdf6e3
-   }
-}
 
+
+exec --no-startup-id xset r rate 200 40
+exec --no-startup-id rofi
+exec --no-startup-id feh --randomize --bg-fill ~/.i3/wallpaper/*.png
+
+bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
+
+# scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+# Toggle movement
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth
+bindsym $mod+n workspace next
+bindsym $mod+m workspace prev
+
+
+# Locks the screen, waits 60 seconds and turns the screen off if it's still locked
+bindsym $mod+grave exec "i3lock -i `echo $(shuf -n1 -e ~/.i3/wallpaper/*) | tee /tmp/wall`; sleep 30; pgrep i3lock && xset dpms force off"
+
+# Locks the screen then suspends the computer. pm-utils package required
+bindsym $mod+Shift+grave exec "sudo pm-suspend | i3lock -i `echo $(shuf -n1 -e ~/.i3/wallpaper/*) | tee /tmp/wall`"
+# Automatically lock the screen in three minutes. xautolock package required
+exec --no-startup-id xautolock -time 3 -locker 'i3lock -i `shuf -n1 -e ~/.i3/wallpaper/*`; sleep 60; pgrep i3lock && xset dpms force off' &
+# Sets the wallpaper to a random image. feh package required
+
+
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
+bindsym XF86AudioMute exec "amixer set Master 0"
+bindsym XF86AudioLowerVolume exec "amixer -D pulse set Master 5%+"
+bindsym XF86AudioRaiseVolume exec "amixer -D pulse set Master 5%+"
+
+bindsym $mod+p exec "xdotool click 2"
+
+# Correct handling of dialogs
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="About"] floating enable
+for_window [title="Preferences$"] floating enable
+
+
+#exec --no-startup-id i3-msg 'workspace $tag1;exec urxvt'

@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     try:
       if module == 'calendar' and button == 1:
-        run('gsimplecal')
+        run('xterm -e cal')
       elif module == 'volume':
         if button == 1:
           os.system('$HOME/scripts/volume_control.py up 10')
