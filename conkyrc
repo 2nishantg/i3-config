@@ -19,12 +19,12 @@ TEXT
 {"seperator": false,"separator_block_width": 0,"full_text": " ${if_up wlan0} ${downspeed wlan0}${else} ${downspeed eth0}${endif} ", "color":"\#00ff00"},
 {"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#00A9B5"},
 {"seperator": false,"separator_block_width": 0,"full_text": "  ${exec amixer -D pulse get Master | perl -n -e '/Left.*\[(.*)%\]/ && print int($1)'} ","name":"volume" , "color":"\#00A9B5"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#FF1539"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#B0C4DE"},
 {"seperator": false,"separator_block_width": 0,"full_text": "  $membar ", "color":"\#B0C4DE"},
 {"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#AFB500"},
 {"seperator": false,"separator_block_width": 0,"full_text": "  ${if_up wlan0}${addr wlan0}${else}${if_up eth0}${addr eth0}${else}No Connetion${endif}${endif} ", "color":"\#AFB500"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#DC322F"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#dc322f"${else}"00FF00"${endif}},
 {"seperator": false,"separator_block_width": 0,"full_text": "  ${battery_bar BAT1} ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#dc322f"${else}"00FF00"${endif}},
 {"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#eedd82"},
-{"seperator": false,"separator_block_width": 0,"full_text": "   [${time %a %d %b} ${time %H:%M:%S}] ","color": "\#eedd82"}
+{"seperator": false,"separator_block_width": 0,"full_text": "    ${time %a %d %b} ${time %H:%M:%S}  ","color": "\#eedd82"}
 ]

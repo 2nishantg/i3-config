@@ -190,18 +190,19 @@ client.urgent #d33682 #d33682 #fdf6e3 #dc322f
 bar {
   colors {
     separator #dc322f
-    background #212121
+    background #000000
     statusline #268bd2
-    focused_workspace #0a9dff #0a9dff #fdf6e3
+    inactive_workspace #586e75 #93a1a1 #282828
     active_workspace #fdf6e3 #6c71c4 #fdf6e3
-    inactive_workspace #586e75 #93a1a1 #002b36
+    focused_workspace  #729FCF #3465A4  #ffffff
     urgent_workspace #d33682 #859000 #fdf6e3
   }
     status_command ~/.i3/conky-i3bar.py
     font pango:Terminus, FontAwesome 11
 }
+#    focused_workspace #ffffff #4682b4 #ffff00
 
-
+#    background #212121
 
 exec --no-startup-id xset r rate 200 40
 exec --no-startup-id rofi
