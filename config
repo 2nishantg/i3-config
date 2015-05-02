@@ -194,10 +194,10 @@ bar {
     statusline #268bd2
     inactive_workspace #586e75 #93a1a1 #282828
     active_workspace #fdf6e3 #6c71c4 #fdf6e3
-    focused_workspace  #729FCF #3465A4  #ffffff
+    focused_workspace  #273642 #073642  #DC322F
     urgent_workspace #d33682 #859000 #fdf6e3
   }
-    status_command ~/.i3/conky-i3bar.py
+    status_command ~/.i3/conky
     font pango:Terminus, FontAwesome 11
 }
 #    focused_workspace #ffffff #4682b4 #ffff00
