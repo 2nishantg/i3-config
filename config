@@ -190,11 +190,11 @@ client.urgent #d33682 #d33682 #fdf6e3 #dc322f
 bar {
   colors {
     separator #dc322f
-    background #000000
+    background #292824
     statusline #268bd2
-    inactive_workspace #586e75 #93a1a1 #282828
+    inactive_workspace #93a1a1 #a6a28c #20201d
     active_workspace #fdf6e3 #6c71c4 #fdf6e3
-    focused_workspace  #273642 #073642  #DC322F
+    focused_workspace  #273642 #1c3657  #cfb017
     urgent_workspace #d33682 #859000 #fdf6e3
   }
     status_command ~/.i3/conky

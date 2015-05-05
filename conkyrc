@@ -1,7 +1,7 @@
 background        no
 out_to_console    yes
 out_to_x          no
-update_interval   5
+update_interval   2
 total_run_times   0
 short_units   yes
 pad_percents    3
@@ -9,22 +9,23 @@ if_up_strictness address
 override_utf8_locale yes
 TEXT
 ,[
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#FFFFFF"},
-{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec whoami}", "color":"\#ffffff"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#6F3BFF"},
-{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec hostname}", "color":"\#6F3BFF"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#FF0000"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ${if_up wlan0} ${upspeed wlan0}${else} ${upspeed eth0}${endif} ", "color":"\#ff0000"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#00FF00"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ${if_up wlan0} ${downspeed wlan0}${else} ${downspeed eth0}${endif} ", "color":"\#00ff00"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#00A9B5"},
-{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec amixer -D pulse get Master | perl -n -e '/Left.*\[(.*)%\]/ && print int($1)'} ","name":"volume" , "color":"\#00A9B5"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#B0C4DE"},
-{"seperator": false,"separator_block_width": 0,"full_text": "  $membar ", "color":"\#B0C4DE"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#AFB500"},
-{"seperator": false,"separator_block_width": 0,"full_text": "  ${if_up wlan0}${addr wlan0}${else}${if_up eth0}${addr eth0}${else}No Connetion${endif}${endif} ", "color":"\#AFB500"},
+{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec xdotool getactivewindow getwindowname | sed "s/\"\|'//g" }", "color":"\#e6550d"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#fefbec"},
+{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec whoami}", "color":"\#fefbec"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#b854d4"},
+{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec hostname}", "color":"\#b854d4"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#d73737"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ${if_up wlan0} ${upspeed wlan0}${else} ${upspeed eth0}${endif} ", "color":"\#d73737"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#60ac39"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ${if_up wlan0} ${downspeed wlan0}${else} ${downspeed eth0}${endif} ", "color":"\#60ac39"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#1fad83"},
+{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec amixer -D pulse get Master | perl -n -e '/Left.*\[(.*)%\]/ && print int($1)'} ","name":"volume" , "color":"\#1fad83"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#cfb017"},
+{"seperator": false,"separator_block_width": 0,"full_text": "  $membar ", "color":"\#cfb017"},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#6684e1"},
+{"seperator": false,"separator_block_width": 0,"full_text": "  ${if_up wlan0}${addr wlan0}${else}${if_up eth0}${addr eth0}${else}No Connection${endif}${endif} ", "color":"\#6684e1"},
 {"seperator": false,"separator_block_width": 0,"full_text": " ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#dc322f"${else}"00FF00"${endif}},
-{"seperator": false,"separator_block_width": 0,"full_text": "  ${battery_bar BAT1} ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#dc322f"${else}"00FF00"${endif}},
-{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#eedd82"},
-{"seperator": false,"separator_block_width": 0,"full_text": "    ${time %a %d %b} ${time %H:%M:%S}  ","color": "\#eedd82"}
+{"seperator": false,"separator_block_width": 0,"full_text": "  ${battery_bar BAT1} ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#e31a1c"${else}"\#31a354"${endif}},
+{"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#e8e4cf"},
+{"seperator": false,"separator_block_width": 0,"full_text": "    ${time %a %d %b} ${time %H:%M:%S}  ","color": "\#e8e4cf"}
 ]
