@@ -24,9 +24,9 @@ set $mod Mod4
 
 font pango:Terminus, Icons 9
 #Modified by me for borders
-hide_edge_borders vertical
-new_window pixel 1
-
+hide_edge_borders both
+new_window pixel 0
+new_float none
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
@@ -97,12 +97,12 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 
-set $tag1 "1:tmux"
-set $tag2 "2:emacs"
-set $tag3 "3:web"
-set $tag4 "4:media"
-set $tag5 "5:irc"
-set $tag6 "6:music"
+set $tag1 " "
+set $tag2 " "
+set $tag3 " "
+set $tag4 " "
+set $tag5 " "
+set $tag6 " "
 
 # switch to workspace
 bindsym $mod+1 workspace $tag1
@@ -190,15 +190,15 @@ client.urgent #d33682 #d33682 #fdf6e3 #dc322f
 bar {
   colors {
     separator #dc322f
-    background #292824
+    background #1f1f1f
     statusline #268bd2
-    inactive_workspace #93a1a1 #a6a28c #20201d
-    active_workspace #fdf6e3 #6c71c4 #fdf6e3
-    focused_workspace  #273642 #1c3657  #cfb017
+    inactive_workspace #1f1f1f #1f1f1f #a0a0a0
+    active_workspace #1f1f1f #1f1f1f #ef2231
+    focused_workspace  #1f1f1f #1f1f1f  #ef2231
     urgent_workspace #d33682 #859000 #fdf6e3
   }
     status_command ~/.i3/conky
-    font pango:Terminus, FontAwesome 11
+    font pango:Terminus, FontAwesome 15
 }
 #    focused_workspace #ffffff #4682b4 #ffff00
 
@@ -221,7 +221,7 @@ bindsym $mod+m workspace prev
 
 
 # Locks the screen, waits 60 seconds and turns the screen off if it's still locked
-bindsym $mod+grave exec "i3lock -i `echo $(shuf -n1 -e ~/.i3/wallpaper/*) | tee /tmp/wall`; sleep 30; pgrep i3lock && xset dpms force off"
+bindsym $mod+grave exec ~/scripts/i3exit
 
 # Locks the screen then suspends the computer. pm-utils package required
 bindsym $mod+Shift+grave exec "sudo pm-suspend | i3lock -i `echo $(shuf -n1 -e ~/.i3/wallpaper/*) | tee /tmp/wall`"
@@ -230,11 +230,11 @@ exec --no-startup-id xautolock -time 3 -locker 'i3lock -i `shuf -n1 -e ~/.i3/wal
 # Sets the wallpaper to a random image. feh package required
 
 
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10"
+bindsym XF86MonBrightnessDown exec "/home/nis/scripts/dbright -d 5"
+bindsym XF86MonBrightnessUp exec "/home/nis/scripts/dbright -i 5"
 bindsym XF86AudioMute exec "/home/nis/scripts/volume_control.py toggle"
-bindsym XF86AudioLowerVolume exec "/home/nis/scripts/volume_control.py down 10"
-bindsym XF86AudioRaiseVolume exec "/home/nis/scripts/volume_control.py up 10"
+bindsym XF86AudioLowerVolume exec "/home/nis/scripts/dvol -d 5"
+bindsym XF86AudioRaiseVolume exec "/home/nis/scripts/dvol  -i 5"
 
 bindsym $mod+p exec "xdotool click 2"
 
@@ -245,4 +245,4 @@ for_window [window_role="About"] floating enable
 for_window [title="Preferences$"] floating enable
 
 
-#exec --no-startup-id i3-msg 'workspace $tag1;exec urxvt'
+exec --no-startup-id /home/nis/.i3/den

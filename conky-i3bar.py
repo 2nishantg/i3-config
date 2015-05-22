@@ -24,7 +24,7 @@ if __name__ == '__main__':
   write('{ "version": 1, "stop_signal": 10, "cont_signal": 12, "click_events": true }')
   write('[[]')
 
-  os.system('conky -d -c ~/.conkyrc')
+  os.system('conky -c ~/.i3/conkyrc')
 
   while True:
     line, prefix = read(), ''

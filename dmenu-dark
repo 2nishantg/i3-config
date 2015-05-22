@@ -22,7 +22,7 @@ CACHE=${XDG_CACHE_HOME:-"~/.cache"}/dmenu_run
                 mkdir -p "`dirname "$CACHE"`" && lsx $PATH | sort -u > "$CACHE"
         fi
 )
-exe=`dmenu_run -fn 'Source Code Pro for Powerline medium 8' -nb $base03 -nf $base0 -sb $base02 -sf $magenta "$@"< "$CACHE"` && exec sh -c "$exe"
+exe=`dmenu_run -p ">>"   -fn 'Terminus-9:normal' -nb $base03 -nf $base0 -sb $base02 -sf $magenta "$@"< "$CACHE"` && exec sh -c "$exe"
 
 
 

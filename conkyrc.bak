@@ -9,7 +9,6 @@ if_up_strictness address
 override_utf8_locale yes
 TEXT
 ,[
-{"seperator": false,"separator_block_width": 0,"full_text": "  ${exec xdotool getactivewindow getwindowname | sed "s/\"\|'//g" }", "color":"\#e6550d"},
 {"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#fefbec"},
 {"seperator": false,"separator_block_width": 0,"full_text": "  ${exec whoami}", "color":"\#fefbec"},
 {"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#b854d4"},
@@ -24,7 +23,7 @@ TEXT
 {"seperator": false,"separator_block_width": 0,"full_text": "  $membar ", "color":"\#cfb017"},
 {"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#6684e1"},
 {"seperator": false,"separator_block_width": 0,"full_text": "  ${if_up wlan0}${addr wlan0}${else}${if_up eth0}${addr eth0}${else}No Connection${endif}${endif} ", "color":"\#6684e1"},
-{"seperator": false,"separator_block_width": 0,"full_text": " ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#dc322f"${else}"00FF00"${endif}},
+{"seperator": false,"separator_block_width": 0,"full_text": " ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#e31a1c"${else}"\#31a354"${endif}},
 {"seperator": false,"separator_block_width": 0,"full_text": "  ${battery_bar BAT1} ","color": ${if_match "${exec acpi | cut -c 12}" == "D"}"\#e31a1c"${else}"\#31a354"${endif}},
 {"seperator": false,"separator_block_width": 0,"full_text": " ", "color":"\#e8e4cf"},
 {"seperator": false,"separator_block_width": 0,"full_text": "    ${time %a %d %b} ${time %H:%M:%S}  ","color": "\#e8e4cf"}
