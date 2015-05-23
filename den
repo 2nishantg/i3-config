@@ -16,7 +16,7 @@ CRIT_COLOR="#ff2c4a"
 DZEN_FG="#a0a0a0"
 DZEN_BG="#1f1f1f"
 HEIGHT=25
-WIDTH=1210
+WIDTH=1190
 RESOLUTIONW=1920
 RESOLUTIONH=1080
 X=660
@@ -44,18 +44,24 @@ sleep ${SLEEP}
 Window ()
 {
     NAME=$(xdotool getactivewindow getwindowname| cut -c1-30)
-    echo -n "${NAME}"
+    echo -n " ^fg($COLOR_ICON)^i($ICONPATH/corner.xbm)^fg() ${NAME}"
+    return
 }
 
+CPU ()
+{
+    CPU=$( grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}')
+    echo -n " ^fg($COLOR_ICON)^i($ICONPATH/cpu.xbm) ^fg()" $(echo $CPU | gdbar -fg "#aef8ef" -h $BAR_H -w $BAR_W -s o -ss 0 -sw 2 -nonl )
+}
 
 Vol ()
 {
 	ONF=$(amixer get Master | awk '/Front\ Left:/ {print $7}' | tr -d '[]')
 	VOL=$(amixer get Master | awk '/Front\ Left:/ {print $5}' | tr -d '[]%')
 		if [[ ${ONF} == 'off' ]] ; then
-		   echo -n "^fg($CRIT_COLOR)^i($ICONPATH/spkr_01.xbm)^fg()" $(echo "0"  | gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -ss 1 -sw 2 -nonl)
+		   echo -n "^fg($CRIT_COLOR)^i($ICONPATH/spkr_01.xbm)^fg()" $(echo "0"  | gdbar -fg "#DEDEDE" -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -ss 1 -sw 2 -nonl)
 		else
-		   echo -n "^fg($COLOR_ICON)^i($ICONPATH/spkr_01.xbm)^fg()" ${VOL} $(echo $VOL | gdbar -fg $BAR_FG -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -ss 1 -sw 2 -nonl)
+		   echo -n "^fg($COLOR_ICON)^i($ICONPATH/spkr_01.xbm)^fg()" ${VOL} $(echo $VOL | gdbar -fg "#00BCD4" -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -ss 0 -sw 2 -nonl)
 		fi
     return
 }
@@ -63,7 +69,7 @@ Vol ()
 Mem ()
 {
 	MEM=$(free -m | grep '-' | awk '{print $3}')
-	echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm)^fg()" $(echo $MEM | gdbar -fg $CRIT_COLOR -bg $BAR_BG -h $BAR_H -max 8192 -w $BAR_W  -sw 2 -ss 0 -nonl )
+	echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm)^fg()" $(echo $MEM | gdbar -fg $CRIT_COLOR -bg $BAR_BG -h $BAR_H -max 8192 -s o  -w $BAR_W  -sw 2 -ss 0 -nonl )
 	return
 }
 
@@ -82,10 +88,10 @@ Battery ()
 {
 	BAT=$(acpi | awk '{print $4}' | cut -c 1,2)
   CHARGE=$(acpi | cut -c 12)
-  if [ "${CHARGE}"=="C" ] ; then
-  echo -n "^fg($COLOR_ICON)^i($ICONPATH/bat_full_01.xbm)^fg() ${BAT}% " $(echo $BAT | gdbar -fg "#12ef67" -bg $BAR_BG -h 10  -s v -sw 5  -ss 0 -sh 1 -nonl)
+  if [[ ${CHARGE} == 'C' ]] ; then
+  echo -n "^fg($COLOR_ICON)^i($ICONPATH/power-ac.xbm)^fg() ${BAT}% " $(echo $BAT | gdbar -fg "#8EE38B" -bg $BAR_BG -h 10  -s v -sw 5  -ss 0 -sh 1 -nonl)
   else
-  echo -n "^fg($COLOR_ICON)^i($ICONPATH/bat_full_01.xbm)^fg() ${BAT}%" $(echo $BAT | gdbar -fg $CRIT_COLOR  -bg $BAR_BG -h 10  -s v -sw 5  -ss 0 -sh 1 -nonl)
+  echo -n "^fg($COLOR_ICON)^i($ICONPATH/power-bat.xbm)^fg() ${BAT}%" $(echo $BAT | gdbar -fg "#D14238"  -bg $BAR_BG -h 10  -s v -sw 5  -ss 0 -sh 1 -nonl)
   fi
   return
 }
@@ -93,14 +99,14 @@ Battery ()
 Ip ()
 {
     IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}')
-    echo -n  "^fg(#82eff7)^i($ICONPATH/link.xbm) ${IP} "
+    echo -n  "^fg(#aeee00)^i($ICONPATH/link.xbm) ^fg()${IP} "
     return
 }
 
 Date ()
 {
 	TIME=$(date +%R)
-		echo -n "^fg($COLOR_ICON)^i($ICONPATH/clock.xbm)^fg() ${TIME}"
+  echo -n "^fg($COLOR_ICON)^i($ICONPATH/clock.xbm)^fg() ${TIME}"
 	return
 }
 
@@ -112,7 +118,7 @@ Between ()
 
 OSLogo ()
 {
-	echo -n " ^fg($COLOR_ICON)^i($ICONPATH/gentoo.xbm)^fg()"
+	echo -n " ^fg(#b16286)^i($ICONPATH/gentoo.xbm)^fg()"
 	return
 }
 # --------- End Of Functions
@@ -124,6 +130,8 @@ Print () {
     Window
         Between
 		OSLogo
+        Between
+    CPU
         Between
         Mem
         Between

@@ -25,7 +25,7 @@ set $mod Mod4
 font pango:Terminus, Icons 9
 #Modified by me for borders
 hide_edge_borders both
-new_window pixel 0
+new_window none
 new_float none
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -195,7 +195,7 @@ bar {
     inactive_workspace #1f1f1f #1f1f1f #a0a0a0
     active_workspace #1f1f1f #1f1f1f #ef2231
     focused_workspace  #1f1f1f #1f1f1f  #ef2231
-    urgent_workspace #d33682 #859000 #fdf6e3
+    urgent_workspace #1f1f1f #1f1f1f #859900
   }
     status_command ~/.i3/conky
     font pango:Terminus, FontAwesome 15
