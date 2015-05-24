@@ -14,7 +14,7 @@ ICONPATH="$HOME/.xbm/"
 COLOR_ICON="#6e9bcf"
 CRIT_COLOR="#ff2c4a"
 DZEN_FG="#a0a0a0"
-DZEN_BG="#1f1f1f"
+DZEN_BG="#101012"
 HEIGHT=25
 WIDTH=1190
 RESOLUTIONW=1920
@@ -43,7 +43,7 @@ sleep ${SLEEP}
 # ---------
 Window ()
 {
-    NAME=$(xdotool getactivewindow getwindowname| cut -c1-30)
+    NAME=$(xdotool getactivewindow getwindowname| cut -c1-50)
     echo -n " ^fg($COLOR_ICON)^i($ICONPATH/corner.xbm)^fg() ${NAME}"
     return
 }
@@ -51,7 +51,7 @@ Window ()
 CPU ()
 {
     CPU=$( grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}')
-    echo -n " ^fg($COLOR_ICON)^i($ICONPATH/cpu.xbm) ^fg()" $(echo $CPU | gdbar -fg "#aef8ef" -h $BAR_H -w $BAR_W -s o -ss 0 -sw 2 -nonl )
+    echo -n " ^fg(#ffffff)^i($ICONPATH/cpu.xbm) ^fg()" $(echo $CPU | gdbar -fg "#aef8ef" -h $BAR_H -w $BAR_W -s o -ss 0 -sw 2 -nonl )
 }
 
 Vol ()
@@ -89,9 +89,9 @@ Battery ()
 	BAT=$(acpi | awk '{print $4}' | cut -c 1,2)
   CHARGE=$(acpi | cut -c 12)
   if [[ ${CHARGE} == 'C' ]] ; then
-  echo -n "^fg($COLOR_ICON)^i($ICONPATH/power-ac.xbm)^fg() ${BAT}% " $(echo $BAT | gdbar -fg "#8EE38B" -bg $BAR_BG -h 10  -s v -sw 5  -ss 0 -sh 1 -nonl)
+  echo -n "^fg($COLOR_ICON)^i($ICONPATH/power-ac.xbm)^fg() ${BAT}% " $(echo $BAT | gdbar -fg "#8EE38B" -bg $BAR_BG -h 15  -s v -sw 10 -ss 1 -sh 2 -nonl)
   else
-  echo -n "^fg($COLOR_ICON)^i($ICONPATH/power-bat.xbm)^fg() ${BAT}%" $(echo $BAT | gdbar -fg "#D14238"  -bg $BAR_BG -h 10  -s v -sw 5  -ss 0 -sh 1 -nonl)
+  echo -n "^fg($COLOR_ICON)^i($ICONPATH/bat_full_02.xbm)^fg() ${BAT}%" $(echo $BAT | gdbar -fg "#D14238"  -bg $BAR_BG -h 15  -s v -sw 10  -ss 1 -sh 2 -nonl)
   fi
   return
 }
