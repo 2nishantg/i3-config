@@ -95,7 +95,7 @@ Vol ()
 Mem ()
 {
 #	MEM=$(free -m | grep '-' | awk '{print $3}')
-	echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm) ^fg(#FFFF00)^r(1x26)^fg($yellow)"
+	echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm) ^fg(#FFFF78)^r(1x26)^fg(#FFFF78)"
   if [ ${index} -ge 1 ] ; then
       for i in $(eval echo {$((${index}-1))..0})
       do
@@ -106,7 +106,7 @@ Mem ()
   do
       echo -n "^r(1x${values[${i}]})"
   done
-  echo -n "^fg(#FFFF00)^r(1x26)"
+  echo -n "^fg(#FFFF78)^r(1x26)"
 	return
 }
 
@@ -141,7 +141,7 @@ Battery ()
 Ip ()
 {
     IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}')
-    echo -n  "^fg($COLOR_ICON)^i($ICONPATH/link.xbm) ^fg()${IP} "
+    echo -n  "^fg($COLOR_ICON)^i($ICONPATH/link.xbm) ^fg($base1)${IP} "
     return
 }
 
@@ -149,7 +149,7 @@ Ip ()
 Speed ()
 {
 	SPEED=$(/home/nis/bin/measure-net-speed.bash)
-	echo -n "$SPEED" 
+	echo -n "$SPEED"
 	return
 }
 
