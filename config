@@ -24,8 +24,6 @@ set $mod Mod4
 
 font pango:Terminus, Icons 9
 hide_edge_borders none
-new_window none
-new_float none
 for_window [class="^.*"] border pixel 0
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -164,12 +162,13 @@ mode "resize" {
         bindsym semicolon resize grow width 1 px or 1 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 1 px or 1 ppt
-        bindsym Down resize grow height 1 px or 1 ppt
-        bindsym Up resize shrink height 1 px or 1 ppt
-        bindsym Right resize grow width 1 px or 1 ppt
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
+       # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -183,7 +182,7 @@ mode "leave" {
         # Pressing down will grow the window’s height.
         bindsym s exec systemctl poweroff
         bindsym r exec systemctl reboot
-        bindsym l exec "i3lock -i `shuf -n1 -e ~/.i3/wallpaper/*`; sleep 60; pgrep i3lock && xset dpms force off"
+        bindsym l mode "default",exec "i3lock -i `shuf -n1 -e ~/.i3/wallpaper/*`; sleep 60; pgrep i3lock && xset dpms force off"
         # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
@@ -191,57 +190,24 @@ mode "leave" {
 
 bindsym $mod+grave  mode "leave"
 
-# client.focused  #E0E0E0 #E0E0E0 #101010 #859000
-# client.focused_inactive #07a642 #07a642 #eee8d5 #000000
-# client.unfocused #212121 #212121 #93a1a1 #586e75
-# client.urgent #d33682 #d33682 #fdf6e3 #dc322f
-
 # class                 border  backgr. text    indicator
 client.focused          #849492 #849492 #ffffff #2e9ef4
 client.focused_inactive #6e989f #6e686f #ffffff #484e50
 client.unfocused        #6e686f #6e686f #888888 #292d2e
 client.urgent           #e9e6e6 #BFB8B0 #ffffff #900000
 
-# bar {
-#         status_command $HOME/.i3/conky-i3bar.py
-#        # status_command $HOME/.i3/conky
-#         position bottom
-#         font pango:Terminus, Icons 9
-
-
-# colors {
-#      separator #dc322f
-#      background #212121
-#      statusline #268bd2
-#      focused_workspace #0a9dff #0a9dff #212121
-#      active_workspace #fdf6e3 #6c71c4 #fdf6e3
-#      inactive_workspace #d9cec3 #d9cec3 #000000
-#      urgent_workspace #d33682 #03A9F4 #fdf6e3
-#    }
-# }
-
 bar {
   colors {
-    # separator #dc322f
-    # background #101012
-    # statusline #268bd2
-    # inactive_workspace #101012 #101012 #a0a0a0
-    # active_workspace #101012 #101012 #ef2231
-    # focused_workspace  #101012 #101012  #ef2231
-    # urgent_workspace #101012 #101012 #859900
     statusline #606060
-		background #263238
-		focused_workspace #263238 #263238 #8bc34a
-		inactive_workspace #263238 #263238 #37474F
+		background #000000
+		focused_workspace #000000 #000000 #009900
+		inactive_workspace #000000 #000000 #37474F
 		urgent_workspace   #93a1a1 #FFFF00 #1b1b1b
-# alph 242424
 }
+    height 26
     status_command ~/.i3/conky
-    font pango:Terminus, FontAwesome 15
+    font pango:Inconsolata for Powerline, FontAwesome 14
 }
-#    focused_workspace #ffffff #4682b4 #ffff00
-
-#    background #212121
 
 exec --no-startup-id xset r rate 200 40
 exec --no-startup-id rofi
@@ -269,13 +235,13 @@ exec --no-startup-id xautolock -time 3 -locker 'i3lock -i `shuf -n1 -e ~/.i3/wal
 # Sets the wallpaper to a random image. feh package required
 
 
-bindsym XF86MonBrightnessDown exec "/home/nis/scripts/dbright -d 5"
-bindsym XF86MonBrightnessUp exec "/home/nis/scripts/dbright -i 5"
+bindsym XF86MonBrightnessDown exec "/home/nis/bin/dbright -d 5"
+bindsym XF86MonBrightnessUp exec "/home/nis/bin/dbright -i 5"
 bindsym XF86AudioMute exec "/home/nis/scripts/volume_control.py toggle"
-#bindsym XF86AudioLowerVolume exec "/home/nis/scripts/dvol -d 5"
-bindsym XF86AudioLowerVolume exec pavucontrol
-#bindsym XF86AudioRaiseVolume exec "/home/nis/scripts/dvol  -i 5"
-bindsym XF86AudioRaiseVolume exec pavucontrol
+bindsym XF86AudioLowerVolume exec "/home/nis/bin/dvol down 10"
+#bindsym XF86AudioLowerVolume exec pavucontrol
+bindsym XF86AudioRaiseVolume exec "/home/nis/bin/dvol up 10"
+#bindsym XF86AudioRaiseVolume exec pavucontrol
 
 bindsym $mod+p exec "xdotool click 2"
 
@@ -287,16 +253,20 @@ for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 for_window [window_role="Preferences"] floating enable
-for_window [class="(?i)wpa_gui"] floating enable
+for_window [class="(?i)wpa_gui"] floating enable, move position centre
 for_window [instance="sun-awt-X11-XFramePeer"] floating enable
 for_window [class="(?i)pavucontrol"] floating enable, move position centre
+for_window [class="(?i)YAD"] floating enable
+for_window [class="(?i).*zenity"] floating enable, move position centre
+
+
 exec --no-startup-id /home/nis/.i3/den
 
 
 #gaps
 gaps inner 20
 smart_gaps on
-smart_borders on
+smart_borders no_gaps
 
 set $mode_gaps Gaps: (o) outer, (i) inner
 set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)

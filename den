@@ -12,19 +12,19 @@
 # -------------------------
 ICONPATH="$HOME/.xbm/"
 CRIT_COLOR="#BA4040"
-COLOR_ICON="#f36c60"
+COLOR_ICON="#1E90FF"
 DZEN_FG="#ffffff"
-DZEN_BG="#263238"
+DZEN_BG="#000000"
 HEIGHT=26
 WIDTH=1290
 RESOLUTIONW=1920
 RESOLUTIONH=1080
 X=560
 Y=1060
-#BAR_FG="#1E90FF"
-BAR_FG="#268BD2"
+BLUE="#1E90FF"
+BAR_FG="#FF0000"
 BAR_BG="#FFFFFF"
-SEPERATOR="ffff00"
+SEPERATOR="#ffff00"
 BAR_H=10
 BAR_W=80
 FONT="-*-iNCOnsolata-medium-r-*-*-15-*-*-*-*-*-iso10646-*"
@@ -33,7 +33,31 @@ VUP="amixer -c0 -q set Master 4dB+"
 VDOWN="amixer -c0 -q set Master 4dB-"
 EVENT="button3=exit;button4=exec:$VUP;button5=exec:$VDOWN"
 DZEN="dzen2 -x $X -y $Y -w $WIDTH -h $HEIGHT -fn $FONT -ta right -bg $DZEN_BG -fg $DZEN_FG -e "button3=exit;button4=exec:$VUP;button5=exec:$VDOWN""
+NUMBER=60
+LAST=59  #Set it to NUMBER-1 , no need to calculate again and again.
+index=0
 
+#colors
+base03="#002b36"
+base02="#073642"
+base01="#586e75"
+base00="#657b83"
+base0="#839496"
+base1="#93a1a1"
+base2="#eee8d5"
+base3="#fdf6e3"
+yellow="#FFFF00"
+orange="#FF4300"
+red="#dc322f"
+magenta="#d33682"
+violet="#6c71c4"
+blue="#268bd2"
+cyan="#2aa198"
+green="#009900"
+
+
+
+#values=(2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 )
 # -------------
 # Infinite loop
 # -------------
@@ -46,7 +70,7 @@ sleep ${SLEEP}
 Window ()
 {
     NAME=$(xdotool getactivewindow getwindowname| cut -c1-35)
-    echo -n " ${NAME}"
+    echo -n "^fg($base01)${NAME}"
     return
 }
 
@@ -70,8 +94,19 @@ Vol ()
 
 Mem ()
 {
-	MEM=$(free -m | grep '-' | awk '{print $3}')
-	echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm)^fg()" $(echo $MEM | gdbar -fg $BAR_FG  -bg $BAR_BG -h $BAR_H -max 8192 -s o  -w $BAR_W  -sw 2 -ss 0 -nonl )
+#	MEM=$(free -m | grep '-' | awk '{print $3}')
+	echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm) ^fg(#FFFF00)^r(1x26)^fg($yellow)"
+  if [ ${index} -ge 1 ] ; then
+      for i in $(eval echo {$((${index}-1))..0})
+      do
+          echo -n "^r(1x${values[${i}]})"
+      done
+  fi
+  for i in $(eval echo {${LAST}..$((${index}))})
+  do
+      echo -n "^r(1x${values[${i}]})"
+  done
+  echo -n "^fg(#FFFF00)^r(1x26)"
 	return
 }
 
@@ -153,7 +188,6 @@ Wifi ()
 # -----
 Print () {
     Window
-        Between
 		OSLogo
         Between
     CPU
@@ -164,8 +198,6 @@ Print () {
         Between
     Speed
         Between
-    Vol
-        Between
     Battery
         Between
     Date
@@ -174,5 +206,8 @@ Print () {
 }
 
 echo "$(Print)"
+values[$index]=$(($(free -m | grep '-' | awk '{print $3}')*26/8192))
+index=$((${index}+1))
+index=$((${index}%${NUMBER}))
 #done
 done | $DZEN &
