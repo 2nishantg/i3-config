@@ -16,10 +16,10 @@ COLOR_ICON="#f36c60"
 DZEN_FG="#ffffff"
 DZEN_BG="#263238"
 HEIGHT=26
-WIDTH=1190
+WIDTH=1290
 RESOLUTIONW=1920
 RESOLUTIONH=1080
-X=660
+X=560
 Y=1060
 #BAR_FG="#1E90FF"
 BAR_FG="#268BD2"
@@ -27,7 +27,7 @@ BAR_BG="#FFFFFF"
 SEPERATOR="ffff00"
 BAR_H=10
 BAR_W=80
-FONT="-*-Inconsolata-medium-r-*-*-15-*-*-*-*-*-iso10646-*"
+FONT="-*-iNCOnsolata-medium-r-*-*-15-*-*-*-*-*-iso10646-*"
 SLEEP=1
 VUP="amixer -c0 -q set Master 4dB+"
 VDOWN="amixer -c0 -q set Master 4dB-"
@@ -45,7 +45,7 @@ sleep ${SLEEP}
 # ---------
 Window ()
 {
-    NAME=$(xdotool getactivewindow getwindowname| cut -c1-50)
+    NAME=$(xdotool getactivewindow getwindowname| cut -c1-35)
     echo -n " ${NAME}"
     return
 }
@@ -110,10 +110,20 @@ Ip ()
     return
 }
 
+
+Speed ()
+{
+	SPEED=$(/home/nis/bin/measure-net-speed.bash)
+	echo -n "$SPEED" 
+	return
+}
+
+
+
 Date ()
 {
 	TIME=$(date +%R)
-  echo -n "^ca(1, ~/Dzen2/dzen-configs/strangeWORLD/time-date.sh)^fg($COLOR_ICON)^i($ICONPATH/clock.xbm)^fg() ${TIME}^ca()"
+  echo -n "^ca(1,yad --calendar --button gtk-ok:0 --geometry=x200+1645+750 --CLASs "YADWIN" --vertical --text-align center)^fg($COLOR_ICON)^i($ICONPATH/clock.xbm)^fg() ${TIME}^ca()"
 	return
 }
 
@@ -151,6 +161,8 @@ Print () {
     Mem
         Between
     Ip
+        Between
+    Speed
         Between
     Vol
         Between
