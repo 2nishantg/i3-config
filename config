@@ -259,8 +259,8 @@ for_window [class="(?i)pavucontrol"] floating enable, move position centre
 for_window [class="(?i)YAD"] floating enable
 for_window [class="(?i).*zenity"] floating enable, move position centre
 
-
-exec --no-startup-id /home/nis/.i3/den
+#starting Dzen2 Status Bar
+exec --no-startup-id /home/nis/.i3/helperScripts/dzenBar
 
 
 #gaps

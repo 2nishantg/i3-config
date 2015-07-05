@@ -1,0 +1,11 @@
+background        no
+out_to_console    yes
+out_to_x          no
+total_run_times   0
+update_interval 50
+short_units   yes
+pad_percents    3
+if_up_strictness address
+override_utf8_locale yes
+TEXT
+,[]

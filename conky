@@ -1,4 +1,4 @@
 #!/bin/sh
 echo "{\"version\":1}"
 echo "[[]"
-conky -b -c ~/.i3/.conkyrc.bak
+conky -c ~/.i3/conkyrc
