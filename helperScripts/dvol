@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#Customize this stuff
+SINK="1" # Active Sink,Use this command to find - "pacmd list-sinks | grep "* index" | awk '{print $3}'"
+SECS="1"
+COLOR_ICON="#6e9bcf"
+FONT="fixed"
+BG="grey"
+FG="black"
+XPOS="750"
+YPOS="525"
+WIDTH="400"
+HEIGHT="30"
+#Probably do not customize
+PIPE="/tmp/dvolpipe"
+ICON=~/.xbm/spkr_02.xbm
+err() {
+  echo "$1"
+  exit 1
+}
+
+usage() {
+  echo "usage: dvol [option] [argument]"
+  echo
+  echo "Options:"
+  echo "     up - increase volume by \`argument'"
+  echo "     down - decrease volume by \`argument'"
+  echo "     set - set volume to \`argument'"
+  echo "     toggle - toggle mute on and off"
+  echo "     -h, --help     - display this"
+  exit
+}
+#Argument Parsing
+VOL="$(amixer -D pulse get Master | grep -o "\[.*%\]" | grep -o "[0-9]*" | head -n1)"
+
+case "$1" in
+    'up')
+    VALUE=$(( $VOL + $2 ))
+    [ -z "$2" ] && err "No argument specified for increase."
+    AMIXARG=$(pactl set-sink-volume $SINK $(($VALUE>153?153:$VALUE))%)
+    ;;
+  'down')
+    VALUE=$(( $VOL - $2 ))
+    [ -z "$2" ] && err "No argument specified for decrease."
+    AMIXARG=$(pactl set-sink-volume $SINK $(($VALUE<0?0:$VALUE))%)
+    ;;
+  'set')
+    [ -z "$2" ] && err "No argument specified for decrease."
+    AMIXARG=$(pactl set-sink-volume $SINK $2%)
+    ;;
+  'toggle')
+      AMIXARG=(amixer -D pulse set Master Playback Switch toggle)
+    ;;
+  ''|'-h'|'--help')
+    usage
+    ;;
+  *)
+    err "Unrecognized option \`$1', see dvol --help"
+    ;;
+esac
+#Re-evaluating the volume because it has changed.
+VOL="$(amixer -D pulse get Master | grep -o "\[.*%\]" | grep -o "[0-9]*" | head -n1)"
+
+#Using named pipe to determine whether previous call still exists
+#Also prevents multiple volume bar instances
+if [ ! -e "$PIPE" ]; then
+  mkfifo "$PIPE"
+  (dzen2 -l 1 -x "$XPOS" -y "$YPOS" -w "$WIDTH" -h "$HEIGHT" -fn "$FONT" -bg "#000000" -fg "#bebebe" -e 'onstart=uncollapse' < "$PIPE"
+   rm -f "$PIPE") &
+fi
+
+#Feed the pipe!
+(echo "^fg(#696969)^i($ICON) Volume" ; echo "$VOL" | gdbar -max 150 -bg "#000000" -fg "#a9a9a9" -w 400 ; sleep "$SECS") > "$PIPE"

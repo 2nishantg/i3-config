@@ -148,7 +148,7 @@ Ip ()
 
 Speed ()
 {
-	SPEED=$(/home/nis/bin/measure-net-speed.bash)
+	SPEED=$(/home/nis/.i3/helperScripts/measure-net-speed.bash)
 	echo -n "$SPEED"
 	return
 }
