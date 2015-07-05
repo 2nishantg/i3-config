@@ -8,11 +8,11 @@
 # path to store the old results in
 path="/tmp/measure-net-speed"
 
-# grabbing data for each adapter. 
+# grabbing data for each adapter.
 # You can find the paths to your adapters using
 #  find /sys/devices -name statistics
 # If you have more (or less) than two adapters, simply adjust the script here
-# and in the next block. 
+# and in the next block.
 eth0="/sys/class/net/eth0/statistics"
 wlan0="/sys/class/net/wlan0/statistics"
 read eth0_rx < "${eth0}/rx_bytes" || eth0_rx=0
@@ -49,26 +49,26 @@ if [[ "${time_diff}" -gt 0 ]]; then
   tx_rate=$(( $tx_diff / $time_diff ))
 
   # shift by 10 bytes to get KiB/s. If the value is larger than
-  # 1024^2 = 1048576, then display MiB/s instead (simply cut off  
-  # the last two digits of KiB/s). Since the values only give an  
+  # 1024^2 = 1048576, then display MiB/s instead (simply cut off
+  # the last two digits of KiB/s). Since the values only give an
   # rough estimate anyway, this improper rounding is negligible.
 
   # incoming
   rx_kib=$(( $rx_rate >> 10 ))
   if [[ "$rx_rate" -gt 1048576 ]]; then
-      echo -n "^fg(#00FF00)${rx_kib:0: -3}.${rx_kib: -3} MiB/s"
+      echo -n "^fg(#00FF00)${rx_kib:0: -3}.${rx_kib: -3} MiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
   else
-      echo -n "^fg(#00FF00)${rx_kib} KiB/s"
+      echo -n "^fg(#00FF00)${rx_kib} KiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
   fi
 
-  echo -n "  "
+#  echo -n "  "
 
   # outgoing
   tx_kib=$(( $tx_rate >> 10 ))
   if [[ "$tx_rate" -gt 1048576 ]]; then
-      echo -n "^fg(#FF0000)${tx_kib:0: -3}.${tx_kib: -3} MiB/s"
+      echo -n "^fg(#FF0000)^i($HOME/.i3/.xbm/net_up_02.xbm)${tx_kib:0: -3}.${tx_kib: -3} MiB/s"
   else
-      echo -n "^fg(#FF0000)${tx_kib} KiB/s"
+      echo -n "^fg(#FF0000)^i($HOME/.i3/.xbm/net_up_02.xbm) ${tx_kib} KiB/s"
   fi
 else
   echo -n " ? "

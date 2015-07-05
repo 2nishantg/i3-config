@@ -10,7 +10,7 @@
 # -------------------------
 # Dzen settings & Variables
 # -------------------------
-ICONPATH="~/.i3/.xbm"
+ICONPATH="$HOME/.i3/.xbm/"
 CRIT_COLOR="#BA4040"
 COLOR_ICON="#1E90FF"
 DZEN_FG="#ffffff"
@@ -27,7 +27,7 @@ BAR_BG="#FFFFFF"
 SEPERATOR="#ffff00"
 BAR_H=10
 BAR_W=80
-FONT="-*-iNCOnsolata-medium-r-*-*-15-*-*-*-*-*-iso10646-*"
+FONT="-*-Inconsolata-medium-r-*-*-15-*-*-*-*-*-iso10646-*"
 SLEEP=1
 VUP="amixer -c0 -q set Master 4dB+"
 VDOWN="amixer -c0 -q set Master 4dB-"
