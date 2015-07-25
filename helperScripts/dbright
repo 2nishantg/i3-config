@@ -2,7 +2,7 @@
 
 #Customize this stuff
 IF="Master"
-SECS="1"
+SECS="0.5"
 COLOR_ICON="#6e9bcf"
 FONT="fixed"
 BG="grey"
