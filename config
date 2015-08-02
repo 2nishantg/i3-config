@@ -28,25 +28,49 @@ for_window [class="^.*"] border pixel 0
 floating_modifier $mod
 workspace_auto_back_and_forth yes
 
+# Dark Bar Settings
+# # class                 border  backgr. text    indicator
+# client.focused          #ADB85F #ADB85F #2A2829 #5A3D31
+# client.focused_inactive #6e989f #6e686f #ffffff #484e50
+# client.unfocused        #2A2829 #2A2829 #888888 #292d2e
+# client.urgent           #e9e6e6 #BFB8B0 #ffffff #900000
+
+
+# bar {
+#   colors {
+#     statusline #606060
+# 		background #121212
+# 		focused_workspace #121212 #121212 #D9D9D9
+# 		inactive_workspace #121212 #121212 #37474F
+# 		urgent_workspace   #121212 #121212 #FFFF00
+# }
+#     height 26
+#     status_command ~/.i3/conky
+#     font pango:Inconsolata, FontAwesome 14
+# }
 # class                 border  backgr. text    indicator
-client.focused          #ADB85F #ADB85F #2A2829 #5A3D31
-client.focused_inactive #6e989f #6e686f #ffffff #484e50
-client.unfocused        #2A2829 #2A2829 #888888 #292d2e
-client.urgent           #e9e6e6 #BFB8B0 #ffffff #900000
+
+set $background "#ECF0F1"
+
+client.focused          $background $background #2A2829 #5A3D31
+client.focused_inactive #6e989f       #6e686f #ffffff #484e50
+client.unfocused        #2A2829       #2A2829 #888888 #292d2e
+client.urgent           #e9e6e6       #BFB8B0 #ffffff #900000
 
 
 bar {
   colors {
     statusline #606060
-		background #121212
-		focused_workspace #121212 #121212 #D9D9D9
-		inactive_workspace #121212 #121212 #37474F
-		urgent_workspace   #121212 #121212 #FFFF00
+		background $background
+		focused_workspace  $background $background #3449FE
+		inactive_workspace $background $background #95A5A6
+		urgent_workspace   $background $background #FFFF00
 }
     height 26
     status_command ~/.i3/conky
     font pango:Inconsolata, FontAwesome 14
 }
+
 
 
 exec --no-startup-id xset r rate 200 40

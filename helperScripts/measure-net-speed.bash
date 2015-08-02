@@ -52,13 +52,14 @@ if [[ "${time_diff}" -gt 0 ]]; then
   # 1024^2 = 1048576, then display MiB/s instead (simply cut off
   # the last two digits of KiB/s). Since the values only give an
   # rough estimate anyway, this improper rounding is negligible.
-
+  UP="#DC322F"
+  DOWN="#2ECC71"
   # incoming
   rx_kib=$(( $rx_rate >> 10 ))
   if [[ "$rx_rate" -gt 1048576 ]]; then
-      echo -n "^fg(#859900)${rx_kib:0: -3}.${rx_kib: -3} MiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
+      echo -n "^fg($DOWN)${rx_kib:0: -3}.${rx_kib: -3} MiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
   else
-      echo -n "^fg(#859900)${rx_kib} KiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
+      echo -n "^fg($DOWN)${rx_kib} KiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
   fi
 
 #  echo -n "  "
@@ -66,9 +67,9 @@ if [[ "${time_diff}" -gt 0 ]]; then
   # outgoing
   tx_kib=$(( $tx_rate >> 10 ))
   if [[ "$tx_rate" -gt 1048576 ]]; then
-      echo -n "^fg(#DC322F)^i($HOME/.i3/.xbm/net_up_02.xbm)${tx_kib:0: -3}.${tx_kib: -3} MiB/s"
+      echo -n "^fg($UP)^i($HOME/.i3/.xbm/net_up_02.xbm)${tx_kib:0: -3}.${tx_kib: -3} MiB/s"
   else
-      echo -n "^fg(#DC322F)^i($HOME/.i3/.xbm/net_up_02.xbm) ${tx_kib} KiB/s"
+      echo -n "^fg($UP)^i($HOME/.i3/.xbm/net_up_02.xbm) ${tx_kib} KiB/s"
   fi
 else
   echo -n " ? "
