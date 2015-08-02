@@ -4,10 +4,6 @@
 # Dzen settings & Variables
 # -------------------------
 ICONPATH="$HOME/.i3/.xbm/"
-CRIT_COLOR="#BA4040"
-COLOR_ICON="#1E90FF"
-DZEN_FG="#ffffff"
-DZEN_BG="#000000"
 HEIGHT=26
 WIDTH=1290
 RESOLUTIONW=1920
@@ -20,7 +16,7 @@ BAR_BG="#FFFFFF"
 SEPERATOR="#ffff00"
 BAR_H=10
 BAR_W=80
-FONT="-*-Inconsolata-medium-r-*-*-15-*-*-*-*-*-iso10646-*"
+FONT="-*-PragmataPro-medium-r-*-*-15-*-*-*-*-*-iso10646-*"
 SLEEP=1
 VUP="amixer -c0 -q set Master 4dB+"
 VDOWN="amixer -c0 -q set Master 4dB-"
@@ -31,23 +27,18 @@ LAST=59  #Set it to NUMBER-1 , no need to calculate again and again.
 index=0
 
 #colors
-base03="#002b36"
-base02="#073642"
-base01="#586e75"
-base00="#657b83"
-base0="#839496"
-base1="#93a1a1"
-base2="#eee8d5"
-base3="#fdf6e3"
-yellow="#FFFF00"
-orange="#FF4300"
-red="#dc322f"
-magenta="#d33682"
-violet="#6c71c4"
-blue="#268bd2"
-cyan="#2aa198"
-green="#009900"
-
+RED="#27ae60"
+WHITE="#FFFFFF"
+MAGENTA="#d33682"
+VIOLET="#6c71c4"
+BLUE="#268bd2"
+CYAN="#2aa198"
+GREEN="#DC322F"
+MEMORY="#F5F5F5"
+CRIT_COLOR="#BA4040"
+COLOR_ICON="#80203D"
+DZEN_FG="#D9D9D9"
+DZEN_BG="#121212"
 
 
 #values=(2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 )
@@ -63,7 +54,7 @@ sleep ${SLEEP}
 Window ()
 {
     NAME=$(xdotool getactivewindow getwindowname| cut -c1-50)
-    echo -n "^fg($base01)${NAME}"
+    echo -n "^fg()${NAME}"
     return
 }
 
@@ -79,7 +70,7 @@ Vol ()
 	ONF=$(amixer get Master | awk '/Front\ Left:/ {print $7}' | tr -d '[]')
 	VOL=$(amixer get Master | awk '/Front\ Left:/ {print $5}' | tr -d '[]%')
 		if [[ ${ONF} == 'off' ]] ; then
-		   echo -n "^fg($CRIT_COLOR)^i($ICONPATH/spkr_01.xbm)^fg()" $(echo "0"  | gdbar -fg "#DEDEDE" -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -ss 1 -sw 2 -nonl)
+		   echo -n "^fg($CRIT_COLOR)^i($ICONPATH/spkr_01.xbm)^fg()" $(echo "0"  | gdbar -fg   -bg $BAR_BG -h $BAR_H -w $BAR_W -s o -ss 1 -sw 2 -nonl)
 		else
 		   echo -n "^fg($COLOR_ICON)^i($ICONPATH/spkr_01.xbm)^fg()"  $(echo $VOL | gdbar -fg $BAR_FG -bg $BAR_BG -max 155  -h $BAR_H -w $BAR_W -s o -ss 0 -sw 2 -nonl)
 		fi
@@ -89,7 +80,7 @@ Vol ()
 Mem ()
 {
 #	MEM=$(free -m | grep '-' | awk '{print $3}')
-	echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm) ^fg(#F5F5F5)^r(1x26)^fg(#F5F5F5)"
+echo -n "^fg($COLOR_ICON)^i($ICONPATH/mem.xbm) ^fg()^r(1x26)"
   if [ ${index} -ge 1 ] ; then
       for i in $(eval echo {$((${index}-1))..0})
       do
@@ -100,7 +91,7 @@ Mem ()
   do
       echo -n "^r(1x${values[${i}]})"
   done
-  echo -n "^fg(#F5F5F5)^r(1x26) "
+  echo -n "^r(1x26) "
 	return
 }
 
@@ -120,12 +111,12 @@ Battery ()
   BAT=$(acpi | grep -o '[0-9]*%')
   CHARGE=$(acpi | cut -c 12)
   if [[ ${CHARGE} == 'C' ]] ; then
-  echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh )^fg($COLOR_ICON)^i($ICONPATH/power-ac.xbm)^fg() ${BAT} " $(echo $BAT | gdbar -fg "#27ae60" -h 16 -max 98  -s v -sw 10 -ss 0 -sh 1 -nonl)
+  echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh )^fg($COLOR_ICON)^i($ICONPATH/power-ac.xbm)^fg() ${BAT} " $(echo $BAT | gdbar -fg $RED -h 16 -max 98  -s v -sw 10 -ss 0 -sh 1 -nonl)
   else
   if [[ ${CHARGE} == 'F' ]] ; then
-      echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh  )^fg(#27AE60)^i($ICONPATH/power-ac.xbm)^fg(#FFFFFF) ${BAT} "
+      echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh  )^fg($RED)^i($ICONPATH/power-ac.xbm)^fg($WHITE) ${BAT} "
   else
-      echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh  )^fg($COLOR_ICON)^i($ICONPATH/bat_full_02.xbm)^fg() ${BAT}" $(echo $BAT | gdbar -fg "#DC322F" -h 16 -max 98  -s v -sw 10  -ss 0 -sh 1 -nonl)
+      echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh  )^fg($COLOR_ICON)^i($ICONPATH/bat_full_02.xbm)^fg() ${BAT}" $(echo $BAT | gdbar -fg $GREEN -h 16 -max 98  -s v -sw 10  -ss 0 -sh 1 -nonl)
   fi
   fi
   echo -n "^ca()"
@@ -135,7 +126,7 @@ Battery ()
 Ip ()
 {
     IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}')
-    echo -n  "^fg($COLOR_ICON)^i($ICONPATH/link.xbm) ^fg($base1)${IP}"
+    echo -n  "^fg($COLOR_ICON)^i($ICONPATH/link.xbm) ^fg()${IP}"
     return
 }
 
@@ -158,13 +149,13 @@ Date ()
 
 Between ()
 {
-    echo -n " ^fg($SEPERATOR)^r(2x5)^fg() "
+    echo -n " ^fg($COLOR_ICON)^r(2x5)^fg() "
 	return
 }
 
 OSLogo ()
 {
-   echo -n "^fg(#1793d0) ^fn(Ionicons,17)A^fn()^fg()"
+   echo -n "^fg(#1793d0) ^fn(Ionicons,21)A^fn()^fg()"
 	return
 }
 
