@@ -64,7 +64,8 @@ bar {
 		background $background
 		focused_workspace  $background $background #3449FE
 		inactive_workspace $background $background #95A5A6
-		urgent_workspace   $background $background #FFFF00
+		active_workspace $background $background   #995Aa2
+		urgent_workspace   $background $background #FF0F00
 }
     height 26
     status_command ~/.i3/conky
@@ -74,13 +75,15 @@ bar {
 
 
 exec --no-startup-id xset r rate 200 40
-exec --no-startup-id rofi
+exec --no-startup-id urxvtd -q -f
 exec --no-startup-id udiskie --tray
 exec --no-startup-id nm-applet
 exec --no-startup-id feh --randomize --bg-fill ~/.i3/wallpaper/*.png
-exec --no-startup-id /home/nis/.i3/helperScripts/dzenBar
+exec --no-startup-id /home/nis/.i3/helperScripts/dzenBarLight
 exec --no-startup-id xautolock -time 3 -locker 'i3lock -i `shuf -n1 -e ~/.i3/wallpaper/*`; sleep 60; pgrep i3lock && xset dpms force off' &
-
+#exec --no-startup-id autocutsel -fork
+#exec --no-startup-id autocutsel -selection PRIMARY  -fork
+exec --no-startup-id emacs -daemon
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+u workspace $ws1
@@ -109,8 +112,8 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Return exec urxvt
-bindsym $mod+Shift+Return exec emacs
+bindsym $mod+Return exec urxvtc
+bindsym $mod+Shift+Return exec emacsclient -c
 bindsym $mod+Shift+q kill
 bindsym $mod+d exec /home/nis/.i3/helperScripts/dmenu-dark
 bindsym $mod+shift+d exec i3-dmenu-desktop
@@ -149,8 +152,9 @@ bindsym XF86MonBrightnessDown exec "/home/nis/.i3/helperScripts/dbright -d 5"
 bindsym XF86MonBrightnessUp exec "/home/nis/.i3/helperScripts/dbright -i 5"
 bindsym XF86AudioLowerVolume exec "/home/nis/.i3/helperScripts/dvol down 10"
 bindsym XF86AudioRaiseVolume exec "/home/nis/.i3/helperScripts/dvol up 10"
-bindsym $mod+p exec mygtkmenu ~/.config/menus/aloha
-
+bindsym $mod+p [instance="^scratchpad$"] scratchpad show
+exec --no-startup-id urxvt -name scratchpad -e bash
+for_window [instance="^scratchpad$"] move scratchpad
 # Correct handling of dialogs
 for_window [class="(?i)gsimplecal"] floating enable
 for_window [window_role="pop-up"] floating enable
@@ -163,9 +167,10 @@ for_window [class="(?i)wpa_gui"] floating enable, move position centre
 for_window [instance="sun-awt-X11-XFramePeer"] floating enable
 for_window [class="(?i)pavucontrol"] floating enable, move position centre
 for_window [class="(?i)gvim"] floating enable
+for_window [class="(?i)smplayer"] floating enable
 for_window [class="(?i)YAD"] floating enable
 for_window [class="(?i).*zenity"] floating enable, move position centre
-
+#for_window [class="(?i)Firefox"] floating enable
 
 
 ##############################Modes

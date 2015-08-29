@@ -108,10 +108,10 @@ Temp ()
 
 Battery ()
 {
-  BAT=$(acpi | grep -o '[0-9]*%')
+  BAT=$(acpi | grep -o '[0-9]*%' | sed 's/.$//')
   CHARGE=$(acpi | cut -c 12)
   if [[ ${CHARGE} == 'C' ]] ; then
-  echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh )^fg($COLOR_ICON)^i($ICONPATH/power-ac.xbm)^fg() ${BAT} " $(echo $BAT | gdbar -fg $RED -h 16 -max 98  -s v -sw 10 -ss 0 -sh 1 -nonl)
+  echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh )^fg($COLOR_ICON)^i($ICONPATH/power-ac.xbm)^fg() ${BAT}% " $(echo $BAT | gdbar -fg $RED -h 16 -max 98  -s v -sw 10 -ss 0 -sh 1 -nonl)
   else
   if [[ ${CHARGE} == 'F' ]] ; then
       echo -n "^ca(1, ~/.i3/helperScripts/battery-state.sh  )^fg($RED)^i($ICONPATH/power-ac.xbm)^fg($WHITE) ${BAT} "
