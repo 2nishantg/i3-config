@@ -57,9 +57,9 @@ if [[ "${time_diff}" -gt 0 ]]; then
   # incoming
   rx_kib=$(( $rx_rate >> 10 ))
   if [[ "$rx_rate" -gt 1048576 ]]; then
-      echo -n "^fg($DOWN)${rx_kib:0: -3}.${rx_kib: -3} MiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
+      echo -n " ${rx_kib:0: -3}.${rx_kib: -3} MB/s "
   else
-      echo -n "^fg($DOWN)${rx_kib} KiB/s ^i($HOME/.i3/.xbm/net_down_02.xbm)"
+      echo -n " ${rx_kib} KB/s "
   fi
 
 #  echo -n "  "
@@ -67,9 +67,9 @@ if [[ "${time_diff}" -gt 0 ]]; then
   # outgoing
   tx_kib=$(( $tx_rate >> 10 ))
   if [[ "$tx_rate" -gt 1048576 ]]; then
-      echo -n "^fg($UP)^i($HOME/.i3/.xbm/net_up_02.xbm)${tx_kib:0: -3}.${tx_kib: -3} MiB/s"
+      echo -n " ${tx_kib:0: -3}.${tx_kib: -3} MB/s"
   else
-      echo -n "^fg($UP)^i($HOME/.i3/.xbm/net_up_02.xbm) ${tx_kib} KiB/s"
+      echo -n " ${tx_kib} KB/s"
   fi
 else
   echo -n " ? "

@@ -9,10 +9,32 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+set $black       #212121
+set $darkblack   #000000
+set $red         #fb4934
+set $darkred     #cc241d
+set $crimson     #FF003F
+set $alizarin    #E32636
+set $green       #30a304
+set $darkgreen   #98971a
+set $yellow      #fabd2f
+set $darkyellow  #d79921
+set $blue        #83a598
+set $darkblue    #458588
+set $magenta     #d3869b
+set $darkmagenta #b16286
+set $cyan        #8ec07c
+set $darkcyan    #689d6a
+set $white       #ebdbb2
+set $darkwhite   #a89984
+set $background  #000000
+set $transparent #000000FF
+set $spotify     #9EFFAB
+
 set $mod Mod4
 set $ws1 " "
 set $ws2 " "
-set $ws3 " "
+set $ws3 " "
 set $ws4 " "
 set $ws5 " "
 set $ws6 " "
@@ -35,55 +57,63 @@ workspace_auto_back_and_forth yes
 # client.unfocused        #2A2829 #2A2829 #888888 #292d2e
 # client.urgent           #e9e6e6 #BFB8B0 #ffffff #900000
 
+#                       BORDER      BACKGROUND  TEXT   INDICATOR   CHILD_BORDER
+client.focused          $yellow     $yellow     $black $yellow     $yellow
+client.unfocused        $black      $black      $white $black      $darkyellow
+client.focused_inactive $black      $black      $white $black      $darkyellow
+client.urgent           $red        $red        $black $red        $red
+client.background       $black
+
+
+bar {
+#    verbose yes
+    status_command i3blocks
+    i3bar_command i3bar -t
+    position bottom
+    font pango:PragmataPro, FontAwesome 12
+    strip_workspace_numbers yes
+    separator_symbol ""
+#    bindsym button4 nop
+#    bindsym button5 nop
+   tray_padding 5
+    height 30
+    colors {
+        statusline         $white
+        background         $transparent
+        separator          $cyan
+
+#                          BORDER       BACKGROUND   TEXT
+        focused_workspace  $transparent $transparent $crimson
+        inactive_workspace $transparent $transparent $white
+        active_workspace   $transparent $transparent $white
+        urgent_workspace   $red         $red         $transparent
+        binding_mode       $transparent $transparent $yellow
+    }
+}
 
 # bar {
 #   colors {
 #     statusline #606060
-# 		background #121212
-# 		focused_workspace #121212 #121212 #D9D9D9
-# 		inactive_workspace #121212 #121212 #37474F
-# 		urgent_workspace   #121212 #121212 #FFFF00
+# 		background $background
+# 		focused_workspace  $background $background #3449FE
+# 		inactive_workspace $background $background #95A5A6
+# 		active_workspace $background $background   #995Aa2
+# 		urgent_workspace   $background $background #FF0F00
 # }
 #     height 26
 #     status_command ~/.i3/conky
 #     font pango:Inconsolata, FontAwesome 14
 # }
-# class                 border  backgr. text    indicator
-
-set $background "#ECF0F1"
-
-client.focused          $background $background #2A2829 #5A3D31
-client.focused_inactive #6e989f       #6e686f #ffffff #484e50
-client.unfocused        #2A2829       #2A2829 #888888 #292d2e
-client.urgent           #e9e6e6       #BFB8B0 #ffffff #900000
-
-
-bar {
-  colors {
-    statusline #606060
-		background $background
-		focused_workspace  $background $background #3449FE
-		inactive_workspace $background $background #95A5A6
-		active_workspace $background $background   #995Aa2
-		urgent_workspace   $background $background #FF0F00
-}
-    height 26
-    status_command ~/.i3/conky
-    font pango:Inconsolata, FontAwesome 14
-}
 
 
 
-exec --no-startup-id xset r rate 200 40
 exec --no-startup-id urxvtd -q -f
 exec --no-startup-id udiskie --tray
 exec --no-startup-id nm-applet
 exec --no-startup-id feh --randomize --bg-fill ~/.i3/wallpaper/*.png
-exec --no-startup-id /home/nis/.i3/helperScripts/dzenBarLight
+#exec --no-startup-id /home/nis/.i3/helperScripts/dzenBarLight
 exec --no-startup-id xautolock -time 3 -locker 'i3lock -i `shuf -n1 -e ~/.i3/wallpaper/*`; sleep 60; pgrep i3lock && xset dpms force off' &
-#exec --no-startup-id autocutsel -fork
-#exec --no-startup-id autocutsel -selection PRIMARY  -fork
-exec --no-startup-id emacs -daemon
+#exec --no-startup-id emacs -daemon
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+u workspace $ws1
@@ -147,8 +177,8 @@ bindsym $mod+Shift+minus move scratchpad
 bindsym Print exec scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/screenshots/'
 bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+b move container to workspace back_and_forth
-bindsym $mod+n workspace next
-bindsym $mod+m workspace prev
+bindsym $mod+m workspace next
+bindsym $mod+n workspace prev
 bindsym XF86MonBrightnessDown exec "/home/nis/.i3/helperScripts/dbright -d 5"
 bindsym XF86MonBrightnessUp exec "/home/nis/.i3/helperScripts/dbright -i 5"
 bindsym XF86AudioLowerVolume exec "/home/nis/.i3/helperScripts/dvol down 10"
@@ -169,6 +199,7 @@ for_window [instance="sun-awt-X11-XFramePeer"] floating enable
 for_window [class="(?i)pavucontrol"] floating enable, move position centre
 for_window [class="(?i)gvim"] floating enable
 for_window [class="(?i)smplayer"] floating enable
+for_window [class="(?i)smplayer"] sticky enable
 for_window [class="(?i)YAD"] floating enable
 for_window [class="(?i).*zenity"] floating enable, move position centre
 #for_window [class="(?i)Firefox"] floating enable

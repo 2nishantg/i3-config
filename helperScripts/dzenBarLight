@@ -33,11 +33,11 @@ BLACK="#121212"
 BATTERY=$BLACK
 
 ICONPATH="$HOME/.i3/.xbm/"
-HEIGHT=26
-WIDTH=1290
+HEIGHT=24
+WIDTH=1020
 RESOLUTIONW=1920
 RESOLUTIONH=1080
-X=533
+X=200
 Y=1060
 BAR_H=10
 BAR_W=80
@@ -47,6 +47,7 @@ VUP="amixer -c0 -q set Master 4dB+"
 VDOWN="amixer -c0 -q set Master 4dB-"
 EVENT="button3=exit;button4=exec:$VUP;button5=exec:$VDOWN"
 DZEN="dzen2 -x $X -y $Y -w $WIDTH -h $HEIGHT -fn $FONT -ta right -bg $DZEN_BG -fg $DZEN_FG -e "button3=exit;button4=exec:$VUP;button5=exec:$VDOWN""
+#DZEN="dzen2 -x $X -y $Y -w $WIDTH -h $HEIGHT -fn $FONT -bg $DZEN_BG -fg $DZEN_FG -e "button3=exit;button4=exec:$VUP;button5=exec:$VDOWN""
 NUMBER=60
 LAST=59  #Set it to NUMBER-1 , no need to calculate again and again.
 index=0
